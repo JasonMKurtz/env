@@ -21,5 +21,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export PS1='[\u@\h] (\w) $ '
-export PATH=$PATH:~/.bin:~/.bin/scripts
+export PS1='[\u@\h] (\w) $ ' 
+export TZ='America/New_York'
+export PATH=$PATH:~/irssi/bin:~/.bin
+export EDITOR='vi'
