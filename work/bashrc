@@ -1,0 +1,31 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+#ssh() {
+#	if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+#		if [[ $* == *@* ]]; then  
+#			title=$(echo "$*" | awk -F "@" '{print $2}')
+#		else
+#			title=$*
+#		fi
+#		# tmux rename-window $title
+#		command ssh -t $*
+#		tmux rename-window "bash"
+#	else
+#		command ssh -t "$*"
+#	fi
+#}
+
+SOCK="$HOME/.ssh/agent"
+#if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
+if [ -a $SOCK ] ;
+then
+    #rm -f $SOCK
+    #ln -sf $SSH_AUTH_SOCK $SOCK
+    export SSH_AUTH_SOCK=$SOCK
+fi
