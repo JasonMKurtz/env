@@ -3,8 +3,6 @@ setopt nobeep
 autoload -U colors && colors
 PROMPT='%F{031}%n%b%f%{$fb_bold[green]%}@%F{031}%m %{$fg_bold[green]%}::%F %~ %{$fg_bold[green]%}%b%f≫ ' 
 plugins=(git)
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export EDITOR='vi' 
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -18,3 +16,11 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle :compinstall filename '/Users/Jason/.zshrc'
 autoload -Uz compinit
 compinit
+
+# variables and aliases
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export EDITOR='vi' 
+alias ls='ls --color'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
