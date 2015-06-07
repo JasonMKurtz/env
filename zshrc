@@ -19,6 +19,7 @@ compinit
 
 # variables and aliases
 source ~/.bin/spectrum.sh
+export TERM='screen-256color'
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export EDITOR='vi' 
 alias ..='cd ..'
