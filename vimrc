@@ -1,3 +1,9 @@
 set nu
 set showmode
+set nocompatible
+syntax off 
 set ic
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
