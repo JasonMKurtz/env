@@ -13,14 +13,13 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' menu select=1
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle :compinstall filename '/Users/Jason/.zshrc'
+zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 
 # variables and aliases
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export EDITOR='vi' 
-alias ls='ls --color'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
