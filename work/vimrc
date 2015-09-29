@@ -1,9 +1,15 @@
 set nu
 set showmode
 set nocompatible
-syntax off 
 set ic
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set smarttab
+
+let g:Sync_default_command = '!rsync'
+let g:Sync_default_args = '-r'
+set sessionoptions+=globals
+set sessionoptions-=buffers
+set background=dark
