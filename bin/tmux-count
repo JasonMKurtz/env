@@ -1,0 +1,4 @@
+#!/bin/bash
+window_count=$(echo $(tmux ls | awk '{print $2}' | tr '\n' "+" | sed -e 's/^/\(/' -e 's/\+$/\)/') | bc)
+session_count=$(tmux ls | wc -l)
+echo "There are $window_count tmux windows open, across $session_count sessions."
