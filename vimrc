@@ -12,3 +12,5 @@ set expandtab
 set smarttab
 set autoindent
 set noshowmatch
+
+syntax on
