@@ -13,4 +13,7 @@ set smarttab
 set autoindent
 set noshowmatch
 
+set laststatus=2
+set statusline+=%F
+
 syntax on
