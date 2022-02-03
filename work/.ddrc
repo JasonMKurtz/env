@@ -1,0 +1,135 @@
+
+# google-cloud-sdk brew caveat
+#source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+#source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+#
+# BEGIN ANSIBLE MANAGED BLOCK
+# Add homebrew binaries to the path.
+export PATH="/usr/local/bin:${PATH?}"
+
+# Force certain more-secure behaviours from homebrew
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS=--require-sha
+
+# Load ruby shims
+eval "$(rbenv init -)"
+
+# Prefer GNU binaries to Macintosh binaries.
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+
+# Add AWS CLI to PATH
+export PATH="/usr/local/opt/awscli@1/bin:$PATH"
+
+# Add datadog devtools binaries to the PATH
+export PATH="${HOME?}/dd/devtools/bin:${PATH?}"
+
+# Point GOPATH to our go sources
+export GOPATH="${HOME?}/go"
+
+# Point GOBIN at our go binaries
+export GOBIN="$GOPATH/bin"
+
+# Point DATADOG_ROOT to ~/dd symlink
+export DATADOG_ROOT="${HOME?}/dd"
+
+# Tell the devenv vm to mount $GOPATH/src rather than just dd-go
+export MOUNT_ALL_GO_SRC=1
+
+# store key in the login keychain instead of aws-vault managing a hidden keychain
+export AWS_VAULT_KEYCHAIN_NAME=login
+
+# tweak session times so you don't have to re-enter passwords every 5min
+export AWS_SESSION_TTL=24h
+export AWS_ASSUME_ROLE_TTL=1h
+
+# Helm switch from storing objects in kubernetes configmaps to
+# secrets by default, but we still use the old default.
+export HELM_DRIVER=configmap
+
+# Go 1.16+ sets this variable to off by default with the intention to
+# remove it in Go 1.18, which breaks projects using the dep tool.
+# https://blog.golang.org/go116-module-changes
+export GO111MODULE=auto
+
+# Set GITHUB_USERNAME to environment variable
+export GITHUB_USERNAME=jasonmkurtz
+
+# Set GITHUB_BRANCH_PREFIX 
+export GITHUB_BRANCH_PREFIX=jasonk
+# END ANSIBLE MANAGED BLOCK
+
+feature(){
+    gitreset origin/master
+    git checkout -b "$GITHUB_BRANCH_PREFIX/$1"
+}
+
+gitreset() {
+    git checkout $1
+    git fetch origin
+    git reset --hard $1
+}
+
+function gitlab() {
+    open "https://gitlab.ddbuild.io/DataDog/$(basename `git rev-parse --show-toplevel`)/commits/$(git branch --show-current)"
+}
+
+function gitlab_commit() {
+    open "https://gitlab.ddbuild.io/DataDog/$(basename `git rev-parse --show-toplevel`)/commit/$(git rev-parse HEAD)/pipelines?ref=$(git branch --show-current)"
+}
+
+alias currentbranch='git branch | grep "*" | sed "s/* //g"'
+alias mainbranch="git rev-parse --abbrev-ref origin/HEAD | sed 's/origin\///g'"
+alias gcm="git checkout $(mainbranch)"
+
+function newpr() {
+    if [[ $(currentbranch) == $(mainbranch) ]]; then 
+        echo "Not creating a PR on $branch"
+    fi
+    git push --set-upstream origin $(currentbranch)
+}
+
+
+function main() {
+    git checkout $(mainbranch)
+}
+
+function pnr() {
+    cur=$(currentbranch)
+    main=$(mainbranch)
+    if [[ $cur == $main ]]; then 
+        echo "Don't run this on $main!" 
+        exit 1
+    fi
+    cur=$(currentbranch)
+    git checkout $(mainbranch)
+    git pull 
+    git checkout $cur
+    git rebase $(mainbranch)
+}
+    
+alias kfind="kubectl config get-contexts | grep $1"
+
+# source <(kubectl completion zsh)
+
+# Add $HOME/.bin to PATH
+export PATH="${HOME?}/.bin:$PATH"
+
+# Add ~/dd-go/sdp/bin to PATH
+#export PATH="${HOME?}/dd-go/sdp/bin:$PATH"
+
+# SDP auth
+export TEMPORAL_CLI_PLUGIN_HEADERS_PROVIDER=tctl-ddtool-auth
+export TEMPORAL_CLI_TLS_CA=~/.certs/us1.ddbuild.io.pem
+
+# aliases
+alias k='kubectl'
+alias vtoken='ddtool auth token sdm --datacenter us1.ddbuild.io | pbcopy && echo "Vault token copied to clipboard."'
+alias ls='ls --color'
+alias sdp='cd ~/dd-source/domains/eee/apps/sdp'
+alias gc='git chain'
+
+#### fzf #### 
+export FZF_TMUX=1
+
+#### bazel autocomplete ### 
+compdef _bazel bzl

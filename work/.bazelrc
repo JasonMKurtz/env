@@ -1,0 +1,11 @@
+#build --override_repository=com_datadoghq_dd_go=/Users/jason.kurtz/dd-go
+#run --override_repository=com_datadoghq_dd_go=/Users/jason.kurtz/dd-go
+#build --override_repository=com_datadoghq_cnab_tools=/Users/jason.kurtz/cnab-tools
+#run --override_repository=com_datadoghq_cnab_tools=/Users/jason.kurtz/cnab-tools
+startup --host_jvm_args=-XX:-UseParallelGC
+build --repository_cache=/Users/jason.kurtz/.bazel/repo_cache
+build --disk_cache=/Users/jason.kurtz/.bazel/disk_cache
+test --repository_cache=/Users/jason.kurtz/.bazel/repo_cache
+test --disk_cache=/Users/jason.kurtz/.bazel/disk_cache
+run --repository_cache=/Users/jason.kurtz/.bazel/repo_cache
+run --disk_cache=/Users/jason.kurtz/.bazel/disk_cache
