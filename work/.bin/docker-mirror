@@ -1,0 +1,20 @@
+#!/bin/bash
+
+image=$1
+echo "image = $image"
+
+echo "$ docker pull $image"
+docker pull $image
+
+tag="registry.ddbuild.io/$image"
+echo "$ docker tag $image $tag"
+docker tag $image registry.ddbuild.io/$image
+
+echo "$ docker push registry $tag"
+docker push $tag
+
+if [[ $? == 0 ]]; then
+    echo "Pushed!"
+else
+    echo "Hmm. :("
+fi

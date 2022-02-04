@@ -1,0 +1,12 @@
+#!/bin/bash
+
+REGISTRY_URL="https://registry.ddbuild.io/v2"
+
+IMAGE=$1
+echo $IMAGE
+MANIFEST=$(echo "$IMAGE" | awk -F"/" '{print $NF}')
+echo $MANIFEST
+CONFIG_DIGEST=$(curl $REGISTRY_URL/images/base/manifests/$MANIFEST 2>/dev/null | jq '.config.digest')
+echo $CONFIG_DIGEST
+CONFIG=$(curl -L $REGISTRY_URL/images/base/blobs/$CONFIG_DIGEST 2>/dev/null | jq '.config.Labels')
+echo $CONFIG

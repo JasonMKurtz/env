@@ -1,0 +1,8 @@
+#!/bin/bash
+if ! [[ -n $1 ]]
+then
+        cluster=$(kubectl config view --minify | grep -i namespace | awk -F":" '{print $2}' | xargs || "default")
+        echo $cluster
+else
+    kubectl config set-context --current --namespace=$1
+fi
